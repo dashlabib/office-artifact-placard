@@ -7,6 +7,7 @@ Python 3.13, standard library only, no network, deterministic output.
 """
 
 import os
+import sys
 
 PLACARD = (
     "Stapler, c. 1994, pressed steel. Found in a manager's drawer beside "
@@ -14,8 +15,15 @@ PLACARD = (
     "Department of Passive Aggression."
 )
 
+MAX_PLACARD_CHARS = 180
+
 
 def main() -> None:
+    if not 1 <= len(PLACARD) <= MAX_PLACARD_CHARS:
+        sys.exit(
+            f"error: placard must be 1-{MAX_PLACARD_CHARS} chars, "
+            f"got {len(PLACARD)}"
+        )
     output_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
     os.makedirs(output_dir, exist_ok=True)
     path = os.path.join(output_dir, "entry.txt")
